@@ -36,16 +36,15 @@ router.post("todos", (ctx) => {
   ctx.status = 204;
 });
 
-router.put("/todos/:id", (ctx, next) => {
-  const index = todos.findIndex((t) => t.id === parseInt(ctx.params.id));
-  todos[index].title = "Todo" + (index + 1) + "updated";
-  ctx.body = todos[index];
+router.put("/todos/:id", (ctx) => {
+  const task = todos.find((t) => t.id === parseInt(ctx.params.id));
+  task.title = index + 1 + "updated";
+  ctx.body = todos;
 });
 
-router.delete("/todos/:id", (ctx, next) => {
-  const index = todos.findIndex((t) => t.id === parseInt(ctx.params.id));
-  todos.splice(index, 1);
-  ctx.body = todos;
+router.delete("/todos/:id", (ctx) => {
+  const updatedTodos = todos.filter((t) => t.id !== parseInt(ctx.params.id));
+  ctx.body = updatedTodos;
 });
 
 app.use(bodyParser).use(router.routes()).use(router.allowedMethods());
